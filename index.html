@@ -2,16 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Touch - Meet New People Now</title>
-    <meta name="description" content="Welcome to my personal page">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Elena - Personal Page</title>
+    <meta name="description" content="Welcome to Elena's personal page">
+    <meta name="theme-color" content="#FF7A19">
     <style>
         /* 基础样式重置 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
         }
         
         body {
@@ -24,6 +26,8 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            overflow-x: hidden;
         }
         
         /* 容器样式 */
@@ -32,6 +36,7 @@
             max-width: 400px;
             margin: 0 auto;
             text-align: center;
+            animation: fadeIn 0.5s ease;
         }
         
         /* 头像样式 */
@@ -41,38 +46,50 @@
             border-radius: 50%;
             object-fit: cover;
             border: 4px solid white;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            margin-bottom: 24px;
+            transition: transform 0.3s ease;
+        }
+        
+        .avatar:hover {
+            transform: scale(1.05);
         }
         
         /* 标题样式 */
         .title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 10px;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 12px;
             color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .subtitle {
             font-size: 16px;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 30px;
-            max-width: 80%;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 32px;
+            max-width: 85%;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.5;
         }
         
         /* 视频容器样式 */
         .video-container {
             width: 100%;
-            max-width: 320px;
-            margin: 0 auto 25px;
-            border-radius: 16px;
+            max-width: 340px;
+            margin: 0 auto 32px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-            border: 3px solid white;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+            border: 4px solid white;
             position: relative;
             background-color: #000;
+            transition: transform 0.3s ease;
+        }
+        
+        .video-container:hover {
+            transform: scale(1.02);
         }
         
         .video-container::before {
@@ -95,34 +112,53 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 16px;
+            margin-bottom: 32px;
         }
         
         .link-button {
             display: block;
             width: 100%;
-            padding: 16px 20px;
-            background-color: white;
+            padding: 18px 24px;
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%);
             color: #FF7A19;
             text-decoration: none;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 16px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            font-size: 17px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .link-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .link-button:hover::after,
+        .link-button:active::after {
+            opacity: 1;
         }
         
         .link-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            background-color: #f0f0f0;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
         }
         
         .link-button:active {
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
         }
         
         /* 页脚样式 */
@@ -130,6 +166,7 @@
             margin-top: 20px;
             color: rgba(255, 255, 255, 0.7);
             font-size: 14px;
+            padding: 0 15px;
         }
         
         /* 背景样式 */
@@ -139,19 +176,86 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #FF7A19;
+            background: linear-gradient(135deg, #FF7A19 0%, #FF9433 100%);
             z-index: -1;
+        }
+        
+        /* 动画 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 加载指示器 */
+        .loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 122, 25, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
         
         /* 响应式调整 */
         @media (max-width: 480px) {
-            .container {
-                padding: 0 15px;
+            body {
+                padding: 15px;
             }
             
             .avatar {
                 width: 100px;
                 height: 100px;
+                border-width: 3px;
+            }
+            
+            .title {
+                font-size: 24px;
+            }
+            
+            .subtitle {
+                font-size: 15px;
+                max-width: 90%;
+            }
+            
+            .video-container {
+                max-width: 300px;
+                border-width: 3px;
+            }
+            
+            .link-button {
+                padding: 16px 20px;
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 350px) {
+            .video-container {
+                max-width: 260px;
             }
             
             .title {
@@ -161,9 +265,17 @@
             .subtitle {
                 font-size: 14px;
             }
+        }
+        
+        /* 触摸优化 */
+        @media (hover: none) {
+            .link-button:hover {
+                transform: none;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            }
             
-            .video-container {
-                max-width: 280px;
+            .link-button:active {
+                transform: scale(0.98);
             }
         }
     </style>
@@ -172,129 +284,190 @@
     <!-- 背景 -->
     <div class="background"></div>
     
+    <!-- 加载指示器 -->
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <div style="color: white; font-size: 16px; font-weight: 600;">Redirecting...</div>
+    </div>
+    
     <!-- 主要内容 -->
     <div class="container">
         <!-- 头像 -->
-        <img src="images/1.jpg" alt="Profile picture" class="avatar">
+        <img src="images/1.jpg" alt="Elena Profile" class="avatar">
         
         <!-- 标题和描述 -->
         <h1 class="title">Elena</h1>
     
         <!-- 视频容器 -->
         <div class="video-container">
-            <video class="video-player" autoplay loop muted playsinline>
+            <video class="video-player" autoplay loop muted playsinline preload="auto">
                 <source src="images/2.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
 
         <p class="subtitle">I update my status daily; feel free to check it out if you like.</p>
-
-        <div style="height: 40px;"></div>
         
         <!-- 链接按钮 -->
         <div class="links">
-            <a href="https://y29v.com/l/jcpHtbzD" class="link-button" target="_blank">Explore Content</a>
-            <button class="link-button" id="telegramBtn" onclick="openTelegramChannel()">My Channel</button>
+            <a href="https://y29v.com/l/jcpHtbzD" class="link-button" target="_blank" onclick="trackClick('explore')">Explore Content</a>
+            <button class="link-button" onclick="safeRedirect('telegram')">My Channel</button>
         </div>
         
         <!-- 页脚 -->
         <div class="footer">
-            © 2025 Elena. All rights reserved.
+            © 2026 Elena. All rights reserved.
         </div>
     </div>
 
-    <!-- 跳转中间页面的div（隐藏） -->
-    <div id="redirectOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #FF7A19; z-index: 9999; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px;">
-        <h2 style="margin-bottom: 20px;">Redirecting...</h2>
-        <p style="margin-bottom: 30px;">You are being redirected to my Telegram channel. Please wait a moment.</p>
-        <div id="countdown" style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">5</div>
-        <p id="redirectLink" style="font-size: 14px; opacity: 0.8; word-break: break-all; max-width: 90%;"></p>
-    </div>
-
     <script>
-        // 确保视频自动播放
+        // 确保视频自动播放（移动端优化）
         document.addEventListener('DOMContentLoaded', function() {
             const video = document.querySelector('.video-player');
-            video.play().catch(function(error) {
-                console.log('Auto-play was prevented:', error);
-            });
+            
+            // 移动端自动播放优化
+            video.setAttribute('playsinline', '');
+            video.setAttribute('webkit-playsinline', '');
+            
+            const playPromise = video.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(function(error) {
+                    // 如果自动播放失败，显示一个播放按钮
+                    console.log('Auto-play prevented, showing fallback');
+                    video.controls = true;
+                });
+            }
         });
-
-        // 安全跳转函数 - 添加延迟和中间页面
-        function openTelegramChannel() {
-            const overlay = document.getElementById('redirectOverlay');
-            const countdownElement = document.getElementById('countdown');
-            const redirectLinkElement = document.getElementById('redirectLink');
-            const targetUrl = 'https://t.me/+Za4Umsiv0ZthMDll';
+        
+        // 安全跳转函数 - 针对移动端优化
+        function safeRedirect(type) {
+            const loader = document.getElementById('loader');
             
-            // 显示中间页面
-            overlay.style.display = 'flex';
+            // 显示加载指示器（仅短暂显示）
+            loader.style.display = 'flex';
             
-            // 显示目标链接（可选，用于透明度）
-            redirectLinkElement.textContent = targetUrl;
-            
-            // 倒计时跳转（5秒延迟）
-            let countdown = 5;
-            countdownElement.textContent = countdown;
-            
-            const countdownInterval = setInterval(function() {
-                countdown--;
-                countdownElement.textContent = countdown;
-                
-                if (countdown <= 0) {
-                    clearInterval(countdownInterval);
-                    
-                    // 方法1：直接跳转（可能会被检测）
-                    // window.open(targetUrl, '_blank');
-                    
-                    // 方法2：使用中间跳转（更安全）
-                    // 创建一个隐藏的iframe来加载链接
-                    const iframe = document.createElement('iframe');
-                    iframe.style.display = 'none';
-                    iframe.src = targetUrl;
-                    document.body.appendChild(iframe);
-                    
-                    // 同时尝试直接打开（增加成功率）
-                    setTimeout(function() {
-                        window.location.href = targetUrl;
-                    }, 100);
-                    
-                    // 隐藏中间页面
-                    setTimeout(function() {
-                        overlay.style.display = 'none';
-                    }, 2000);
-                }
-            }, 1000);
-            
-            // 如果用户点击中间页面，也可以直接跳转
-            overlay.onclick = function() {
-                clearInterval(countdownInterval);
-                window.location.href = targetUrl;
+            // 根据不同平台使用不同跳转策略
+            const urls = {
+                telegram: 'https://t.me/+Za4Umsiv0ZthMDll'
             };
+            
+            const targetUrl = urls[type];
+            
+            if (!targetUrl) return;
+            
+            // 记录点击时间（用于用户行为分析）
+            const clickTime = Date.now();
+            localStorage.setItem('lastRedirect', clickTime);
+            
+            // 移动端优化的跳转策略
+            setTimeout(() => {
+                // 策略1：尝试在新标签页打开
+                const newTab = window.open('', '_blank');
+                if (newTab) {
+                    // 先跳转到一个空白页再重定向
+                    newTab.location.href = 'about:blank';
+                    
+                    setTimeout(() => {
+                        try {
+                            // 使用replace方法减少历史记录
+                            newTab.location.replace(targetUrl);
+                        } catch (e) {
+                            // 如果失败，直接设置href
+                            newTab.location.href = targetUrl;
+                        }
+                    }, 50);
+                } else {
+                    // 策略2：如果弹出被阻止，在当前页跳转
+                    // 添加一个中间页面过渡
+                    document.body.style.opacity = '0';
+                    document.body.style.transition = 'opacity 0.3s';
+                    
+                    setTimeout(() => {
+                        // 使用replace而不是href来避免返回问题
+                        window.location.replace(targetUrl);
+                    }, 300);
+                }
+                
+                // 隐藏加载指示器（跳转会很快，这里只是保险）
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 2000);
+                
+            }, 300); // 短暂延迟，模拟自然点击
         }
-
-        // 备用方法：添加随机延迟点击跟踪
-        document.getElementById('telegramBtn').addEventListener('mousedown', function(e) {
-            // 记录点击时间（可用于分析）
-            sessionStorage.setItem('btnClickTime', Date.now());
-        });
-
-        // 防止右键检查链接
+        
+        // 跟踪点击事件
+        function trackClick(type) {
+            const clickData = {
+                type: type,
+                timestamp: Date.now(),
+                userAgent: navigator.userAgent,
+                platform: navigator.platform
+            };
+            
+            // 存储点击数据
+            localStorage.setItem('lastClick_' + type, JSON.stringify(clickData));
+            
+            // 发送简单的事件跟踪（可选）
+            try {
+                navigator.sendBeacon('/api/track', JSON.stringify(clickData));
+            } catch (e) {
+                // 忽略跟踪错误
+            }
+        }
+        
+        // 防止右键检查
         document.addEventListener('contextmenu', function(e) {
-            if (e.target.id === 'telegramBtn' || e.target.closest('#telegramBtn')) {
+            if (e.target.classList.contains('link-button')) {
                 e.preventDefault();
                 return false;
             }
         });
-
-        // 防止开发者工具检查
-        document.addEventListener('keydown', function(e) {
-            // 防止F12和Ctrl+Shift+I
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+        
+        // 防止拖拽暴露链接
+        document.addEventListener('dragstart', function(e) {
+            if (e.target.classList.contains('link-button')) {
                 e.preventDefault();
                 return false;
             }
+        });
+        
+        // 移动端触摸优化
+        let touchStartTime = 0;
+        document.addEventListener('touchstart', function(e) {
+            if (e.target.classList.contains('link-button')) {
+                touchStartTime = Date.now();
+                e.target.style.transform = 'scale(0.98)';
+            }
+        }, { passive: true });
+        
+        document.addEventListener('touchend', function(e) {
+            if (e.target.classList.contains('link-button')) {
+                const touchDuration = Date.now() - touchStartTime;
+                // 如果触摸时间很短，认为是点击
+                if (touchDuration < 500) {
+                    e.target.style.transform = '';
+                }
+            }
+        }, { passive: true });
+        
+        // 页面可见性变化处理
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                // 页面被隐藏（用户可能切换了标签）
+                console.log('Page hidden');
+            }
+        });
+        
+        // 防止页面被iframe嵌入
+        if (window.top !== window.self) {
+            window.top.location = window.self.location;
+        }
+        
+        // 添加页面加载完成的类
+        window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
         });
     </script>
 </body>
