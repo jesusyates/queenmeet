@@ -74,8 +74,8 @@
             line-height: 1.5;
         }
         
-        /* 视频容器样式 */
-        .video-container {
+        /* 图片容器样式 */
+        .image-container {
             width: 100%;
             max-width: 340px;
             margin: 0 auto 32px;
@@ -88,17 +88,17 @@
             transition: transform 0.3s ease;
         }
         
-        .video-container:hover {
+        .image-container:hover {
             transform: scale(1.02);
         }
         
-        .video-container::before {
+        .image-container::before {
             content: '';
             display: block;
             padding-top: 56.25%; /* 16:9 宽高比 */
         }
         
-        .video-player {
+        .content-image {
             position: absolute;
             top: 0;
             left: 0;
@@ -242,7 +242,7 @@
                 max-width: 90%;
             }
             
-            .video-container {
+            .image-container {
                 max-width: 300px;
                 border-width: 3px;
             }
@@ -254,7 +254,7 @@
         }
         
         @media (max-width: 350px) {
-            .video-container {
+            .image-container {
                 max-width: 260px;
             }
             
@@ -298,12 +298,9 @@
         <!-- 标题和描述 -->
         <h1 class="title">Elena</h1>
     
-        <!-- 视频容器 -->
-        <div class="video-container">
-            <video class="video-player" autoplay loop muted playsinline preload="auto">
-                <source src="images/2.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+        <!-- 图片容器 -->
+        <div class="image-container">
+            <img src="images/2.jpg" alt="Content Preview" class="content-image">
         </div>
 
         <p class="subtitle">I update my status daily; feel free to check it out if you like.</p>
@@ -321,23 +318,29 @@
     </div>
 
     <script>
-        // 确保视频自动播放（移动端优化）
+        // 图片加载优化
         document.addEventListener('DOMContentLoaded', function() {
-            const video = document.querySelector('.video-player');
+            const contentImage = document.querySelector('.content-image');
             
-            // 移动端自动播放优化
-            video.setAttribute('playsinline', '');
-            video.setAttribute('webkit-playsinline', '');
+            // 图片加载完成后的处理
+            contentImage.addEventListener('load', function() {
+                this.style.opacity = '1';
+            });
             
-            const playPromise = video.play();
+            // 图片加载失败处理
+            contentImage.addEventListener('error', function() {
+                console.log('Content image failed to load');
+                // 可以设置一个备用图片或隐藏容器
+                this.style.display = 'none';
+                document.querySelector('.image-container').style.display = 'none';
+            });
             
-            if (playPromise !== undefined) {
-                playPromise.catch(function(error) {
-                    // 如果自动播放失败，显示一个播放按钮
-                    console.log('Auto-play prevented, showing fallback');
-                    video.controls = true;
-                });
-            }
+            // 预加载图片
+            const images = ['images/1.jpg', 'images/2.jpg'];
+            images.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
         });
         
         // 安全跳转函数 - 针对移动端优化
@@ -468,8 +471,15 @@
         // 添加页面加载完成的类
         window.addEventListener('load', function() {
             document.body.classList.add('loaded');
+            
+            // 图片渐入效果
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                if (img.complete) {
+                    img.style.opacity = '1';
+                }
+            });
         });
     </script>
 </body>
 </html>
-
